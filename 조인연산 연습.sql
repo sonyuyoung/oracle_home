@@ -6,9 +6,9 @@ from countries;
 select * 
 from locations,countries;
 
---ÀÏÄ¡ÇÏ´Â Á¶°Ç µ¿µîÁ¶ÀÎ / ³»ºÎÁ¶ÀÎ 
+--ì¼ì¹˜í•˜ëŠ” ì¡°ê±´ ë™ë“±ì¡°ì¸ / ë‚´ë¶€ì¡°ì¸ 
 
---µÑ´Ù ÀÖ´Â°Å¿¡ ´ëÇØ¼­ Ãâ·Â
+--ë‘˜ë‹¤ ìˆëŠ”ê±°ì— ëŒ€í•´ì„œ ì¶œë ¥
 select * 
 from locations l, countries c
 where c.country_id=l.country_id;
@@ -16,14 +16,14 @@ where c.country_id=l.country_id;
 select * 
 from employees;
 
---Á÷¿øÁß¿¡ department_id¸¦ °¡Áö°í ÀÖ´Âµ¥ÀÌÅÍ¸¸ 
+--ì§ì›ì¤‘ì— department_idë¥¼ ê°€ì§€ê³  ìˆëŠ”ë°ì´í„°ë§Œ 
 select * 
 from employees e , departments d
 where e.department_id = d.department_id;
 
---Å×ÀÌºí¿¡ µ¿ÀÏÇÑ ¿­ÀÌ ¾ø´Â°æ¿ì 
---Á¶°ÇÀÌ ¾ø´Â°æ¿ì 
---ºñµ¿µîÁ¶ÀÎ
+--í…Œì´ë¸”ì— ë™ì¼í•œ ì—´ì´ ì—†ëŠ”ê²½ìš° 
+--ì¡°ê±´ì´ ì—†ëŠ”ê²½ìš° 
+--ë¹„ë™ë“±ì¡°ì¸
 
 select *
 from employees e,jobs j
@@ -32,21 +32,59 @@ where e.salary between j.min_salary and j.max_salary;
 select e.first_name , e.hire_date , h.start_date ,h.end_date
 from employees e ,job_history h
 where e.hire_date between h.start_date and h.end_date;
--- e.hire_date °í¿ëµÈ ³¯Â¥°¡   h.start_date ~ h.end_date »çÀÌ¿¡ ÀÖÀ¸¸é Ãâ·Â 
+-- e.hire_date ê³ ìš©ëœ ë‚ ì§œê°€   h.start_date ~ h.end_date ì‚¬ì´ì— ìˆìœ¼ë©´ ì¶œë ¥ 
 
 
---¿ÜºÎÁ¶ÀÎ outer join  
---Á¶ÀÎÇÏ´Â Å×ÀÌºí¿¡¼­ Á¶ÀÎÁ¶°ÇÀ» ¸¸Á·ÇÏÁö ¾Ê´Â Çàµµ Ãâ·Â 
+--ì™¸ë¶€ì¡°ì¸ outer join  
+--ì¡°ì¸í•˜ëŠ” í…Œì´ë¸”ì—ì„œ ì¡°ì¸ì¡°ê±´ì„ ë§Œì¡±í•˜ì§€ ì•ŠëŠ” í–‰ë„ ì¶œë ¥ 
 --
 select  * 
 from jobs j ,job_history h 
 where j.job_id= h.job_id(+) ;
 
---¼¿ÇÁÁ¶ÀÎ 
---e.manager_id °¡ m.employees_id ¿Í °°Àº°æ¿ì    e.manager_id °°Àº  m.employees_id¸¦ °¡Áø»ç¶÷À» Ãâ·Â 
+--ì…€í”„ì¡°ì¸ 
+--e.manager_id ê°€ m.employees_id ì™€ ê°™ì€ê²½ìš°    e.manager_id ê°™ì€  m.employees_idë¥¼ ê°€ì§„ì‚¬ëŒì„ ì¶œë ¥ 
 select e.first_name ,e.last_name , m.first_name,m.last_name
 from employees e ,employees m
 where e.manager_id = m.employee_id; 
 
 select*
+from employees;
+
+
+
+--ì‹¤ìŠµ 
+--1
+select c.country_name ,l.state_province, l.street_address
+from countries c , locations l 
+where c.country_id = l.country_id ;
+
+--2
+select j.job_id ,j.job_title ,h.start_date, h.end_date 
+from jobs j, job_history h
+where j.job_id = h.job_id;
+
+
+select e.first_name,e.last_name ,d.department_name, j.job_title
+from employees e, departments d ,jobs j
+where e.department_id=d.department_id
+and e.job_id = j.job_id;
+
+select c.country_id , c.country_name ,l.city 
+from countries c, locations l
+where c.country_id=l.country_id(+);
+
+select e.employee_id, e.first_name , e.last_name , d.department_name
+from employees e,departments d
+where e.department_id=d.department_id(+)
+order by employee_id asc;
+
+select e.first_name ||' '|| e.last_name emoployees,m.first_name || ' ' || m.last_name
+manager 
+from employees m, employees e
+where m.manager_id = e.employee_id
+order by e.employee_id ;
+
+
+select *
 from employees;
